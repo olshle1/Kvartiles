@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="lv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kvartīļu Piemēri - Reāla Pielietošana</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.3/echarts.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Oranienbaum&family=Quattrocento+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- Visual Design Specification (Latvian Educational Version) --- */
+        :root {
+            --bg-color: #FEFEFE; /* Background Color: #FEFEFE */
+            --primary-color: #2D3748; /* Primary Color (Dark Text) */
+            --secondary-color: #4A5568; /* Secondary Color (Gray Text) */
+            --accent-color: #C53030; /* Accent Color (Red/Maroon for emphasis) */
+        }
+        
+        body {
+            font-family: 'Quattrocento Sans', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--primary-color);
+        }
+        
+        .hero-title {
+            font-family: 'Oranienbaum', serif;
+            font-size: 3rem;
+            line-height: 1.1;
+            color: var(--primary-color);
+        }
+        
+        .accent-text {
+            color: var(--accent-color);
+        }
+        
+        .example-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+        
+        .example-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .case-study {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-left: 4px solid var(--accent-color);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+        
+        .hero-bg {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-bottom: 2px solid #e2e8f0;
+        }
+        
+        .chart-container {
+            height: 300px;
+            margin: 1rem 0;
+        }
+        
+        .insight-box {
+            background: #fef5e7;
+            border: 1px solid #f6cc8b;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        
+        .data-table th,
+        .data-table td {
+            border: 1px solid #e2e8f0;
+            padding: 0.75rem;
+            text-align: center;
+        }
+        
+        .data-table th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <nav class="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <h1 class="text-xl font-bold text-gray-900">Kvartīļu Statistika</h1>
+                </div>
+                <div class="flex space-x-8">
+                    <a href="index.html" class="text-gray-600 hover:text-red-600 transition-colors">Kalkulators</a>
+                    <a href="theory.html" class="text-gray-600 hover:text-red-600 transition-colors">Teorija</a>
+                    <a href="examples.html" class="text-red-600 font-medium border-b-2 border-red-600 pb-1">Piemēri</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero-bg py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h1 class="hero-title mb-6">
+                    Piemēri un
+                    <span class="accent-text block">Pielietojums</span>
+                </h1>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+                    Izpētiet, kā kvartīles tiek izmantotas reālos scenārijos: no ienākumu analīzes līdz ražošanas kvalitātes novērtēšanai.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="example-card mb-12">
+                <h2 class="text-2xl font-bold mb-6 text-gray-900">Piemērs 1: Ienākumu Sadalījuma Analīze</h2>
+                
+                <div class="case-study">
+                    <h3 class="text-lg font-semibold mb-3">Situācija</h3>
+                    <p class="text-gray-700 mb-4">
+                        Pilsētas administrācija pēta iedzīvotāju ienākumu sadalījumu, lai plānotu sociālās programmas.
+                        Dati par 20 ģimenēm (tūkstošos EUR).
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-6">
+                    <div>
+                        <h3 class="text-lg font-semibold mb-3">Dati:</h3>
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Nr.</th>
+                                    <th>Ienākumi (tūkst. EUR)</th>
+                                    <th>Nr.</th>
+                                    <th>Ienākumi (tūkst. EUR)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1</td><td>25</td><td>11</td><td>45</td></tr>
+                                <tr><td>2</td><td>28</td><td>12</td><td>48</td></tr>
+                                <tr><td>3</td><td>30</td><td>13</td><td>50</td></tr>
+                                <tr><td>4</td><td>32</td><td>14</td><td>52</td></tr>
+                                <tr><td>5</td><td>35</td><td>15</td><td>55</td></tr>
+                                <tr><td>6</td><td>35</td><td>16</td><td>58</td></tr>
+                                <tr><td>7</td><td>38</td><td>17</td><td>62</td></tr>
+                                <tr><td>8</td><td>40</td><td>18</td><td>65</td></tr>
+                                <tr><td>9</td><td>42</td><td>19</td><td>70</td></tr>
+                                <tr><td>10</td><td>43</td><td>20</td><td>85</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-lg font-semibold mb-3">Aprēķinu rezultāti:</h3>
+                        <div class="space-y-3">
+                            <div class="flex justify-between items-center p-3 bg-gray-100 rounded">
+                                <span class="font-medium">Q0 (Minimums):</span>
+                                <span class="font-bold accent-text">25.00 tūkst. EUR</span>
+                            </div>
+                            <div class="flex justify-between items-center p-3 bg-red-50 rounded">
+                                <span class="font-medium">Q1 (25%):</span>
+                                <span class="font-bold accent-text">35.00 tūkst. EUR</span>
+                            </div>
+                            <div class="flex justify-between items-center p-3 bg-blue-50 rounded">
+                                <span class="font-medium">Q2 (Mediāna):</span>
+                                <span class="font-bold accent-text">44.00 tūkst. EUR</span>
+                            </div>
+                            <div class="flex justify-between items-center p-3 bg-green-50 rounded">
+                                <span class="font-medium">Q3 (75%):</span>
+                                <span class="font-bold accent-text">57.50 tūkst. EUR</span>
+                            </div>
+                            <div class="flex justify-between items-center p-3 bg-gray-100 rounded">
+                                <span class="font-medium">Q4 (Maksimums):</span>
+                                <span class="font-bold accent-text">85.00 tūkst. EUR</span>
+                            </div>
+                            <div class="flex justify-between items-center p-3 bg-yellow-50 rounded">
+                                <span class="font-medium">IQR (Starpkvartīļu amplitūda):</span>
+                                <span class="font-bold accent-text">22.50 tūkst. EUR</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="incomeChart" class="chart-container"></div>
+                
+                <div class="insight-box">
+                    <h4 class="font-semibold mb-2">Rezultātu Interpretācija:</h4>
+                    <ul class="list-disc list-inside space-y-1 text-sm">
+                        <li>25% ģimeņu ienākumi ir zem 35.00 tūkst. EUR mēnesī.</li>
+                        <li>50% ģimeņu ienākumi ir zem 44.00 tūkst. EUR (mediāna).</li>
+                        <li>75% ģimeņu ienākumi ir zem 57.50 tūkst. EUR.</li>
+                        <li>Vidējie 50% datu atrodas diapazonā 35.00-57.50 tūkst. EUR.</li>
+                        <li>Izlecoša vērtība ir ienākumi 85 tūkst. EUR (virs augšējās robežas).</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="example-card mb-12">
+                <h2 class="text-2xl font-bold mb-6 text-gray-900">Piemērs 2: Studentu Sekmju Novērtēšana</h2>
+                
+                <div class="case-study">
+                    <h3 class="text-lg font-semibold mb-3">Situācija</h3>
+                    <p class="text-gray-700 mb-4">
+                        Pasniedzējs analizē statistikas eksāmena rezultātus 30 studentiem, lai noteiktu problēmu jomas un teicamniekus.
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-6">
+                    <div>
+                        <h3 class="text-lg font-semibold mb-3">Eksāmena rezultāti (punkti):</h3>
+                        <div class="grid grid-cols-5 gap-2 text-sm">
+                            <div class="p-2 bg-gray-100 rounded text-center">65</div>
+                            <div class="p-2 bg-gray-100 rounded text-center">68</div>
+                            <div class="p-2 bg-gray-100 rounded text-center">70</div>
+                            <div class="p-2 bg-gray-100 rounded text-center">72</div>
+                            <div class="p-2 bg-gray-100 rounded text-center">73</div>
+                            <div class="p-2 bg-gray-100 rounded text-center">75</div>
+                            <div class="p-2 bg-gray-100 rounded text-center">76</div>
+                            <div class="p-2 bg-gray-100 rounded text-center">78</div>
+                            <div class="p-2 bg-gray-100 rounded text-center">78</div>
+                            <div class="p-2 bg-gray-100 rounded text-center">80</div>
+                            <div class="p-2 bg-gray-100 rounded text-center">81</div>
+                            <div class="p-2 bg-gray-100 rounded text-center">82</div>
+                            <div class="p-2 bg-gray-100 rounded text-center">83</div>
+                            <div class="p-2 bg-gray-100 rounded text-center">84</div>
+                            <div class="p-2 bg-gray-100 rounded text-center">85</div>
+                            <div class="p-2 bg-gray-100 rounded text-center">85</div>
+                            <div class="p-2 bg-gray-100 rounded text-center">86</div>
+                            <div class="p-2 bg-gray-100 rounded text-center">87</div>
+                            <div class="p-2 bg-gray-100 rounded text-center">88</div>
+                            <div class="p-2 bg-gray-100 rounded text-center">89</div>
+                            <div class="p-2 bg-gray-100 rounded text-center">90</div>
+                            <div class="p-2 bg-gray-100 rounded text-center">91</div>
+                            <div class="p-2 bg-gray-100 rounded text-center">92</div>
+                            <div class="p-2 bg-gray-100 rounded text-center">93</div>
+                            <div class="p-2 bg-gray-100 rounded text-center">94</div>
+                            <div class="p-2 bg-gray-100 rounded text-center">95</div>
+                            <div class="p-2 bg-gray-100 rounded text-center">96</div>
+                            <div class="p-2 bg-gray-100 rounded text-center">97</div>
+                            <div class="p-2 bg-gray-100 rounded text-center">98</div>
+                            <div class="p-2 bg-gray-100 rounded text-center">99</div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-lg font-semibold mb-3">Statistikas rādītāji:</h3>
+                        <div class="space-y-3">
+                            <div class="flex justify-between items-center p-3 bg-gray-100 rounded">
+                                <span class="font-medium">Q0 (Minimums):</span>
+                                <span class="font-bold accent-text">65.00 punkti</span>
+                            </div>
+                            <div class="flex justify-between items-center p-3 bg-red-50 rounded">
+                                <span class="font-medium">Q1 (25%):</span>
+                                <span class="font-bold accent-text">78.00 punkti</span>
+                            </div>
+                            <div class="flex justify-between items-center p-3 bg-blue-50 rounded">
+                                <span class="font-medium">Q2 (Mediāna):</span>
+                                <span class="font-bold accent-text">85.00 punkti</span>
+                            </div>
+                            <div class="flex justify-between items-center p-3 bg-green-50 rounded">
+                                <span class="font-medium">Q3 (75%):</span>
+                                <span class="font-bold accent-text">92.00 punkti</span>
+                            </div>
+                            <div class="flex justify-between items-center p-3 bg-gray-100 rounded">
+                                <span class="font-medium">Q4 (Maksimums):</span>
+                                <span class="font-bold accent-text">99.00 punkti</span>
+                            </div>
+                            <div class="flex justify-between items-center p-3 bg-yellow-50 rounded">
+                                <span class="font-medium">IQR (Starpkvartīļu amplitūda):</span>
+                                <span class="font-bold accent-text">14.00 punkti</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="scoresChart" class="chart-container"></div>
+                
+                <div class="insight-box">
+                    <h4 class="font-semibold mb-2">Rezultātu analīze:</h4>
+                    <ul class="list-disc list-inside space-y-1 text-sm">
+                        <li>25% studentu ieguva mazāk nekā 78.00 punktus (nepieciešama papildu palīdzība).</li>
+                        <li>50% studentu ieguva mazāk nekā 85.00 punktus.</li>
+                        <li>25% studentu ieguva vairāk nekā 92.00 punktus (teicamnieki).</li>
+                        <li>Lielākā daļa studentu (50%) atrodas diapazonā 78.00-92.00 punkti.</li>
+                        <li>Studenti ar rezultātiem zem 57.00 un virs 113.00 punktiem tiek uzskatīti par izlecošām vērtībām.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="example-card mb-12">
+                <h2 class="text-2xl font-bold mb-6 text-gray-900">Piemērs 3: Ražošanas Kvalitātes Kontrole</h2>
+                
+                <div class="case-study">
+                    <h3 class="text-lg font-semibold mb-3">Situācija</h3>
+                    <p class="text-gray-700 mb-4">
+                        Gultņu ražotne kontrolē izstrādājumu diametrus. Novirzes no normas var liecināt par problēmām iekārtās. Dati par 25 gultņu diametriem (mm).
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-6">
+                    <div>
+                        <h3 class="text-lg font-semibold mb-3">Gultņu diametri (mm):</h3>
+                        <div class="text-sm space-y-1">
+                            <div class="grid grid-cols-5 gap-1">
+                                <span class="p-2 bg-gray-100 rounded text-center">49.8</span>
+                                <span class="p-2 bg-gray-100 rounded text-center">49.9</span>
+                                <span class="p-2 bg-gray-100 rounded text-center">50.0</span>
+                                <span class="p-2 bg-gray-100 rounded text-center">50.0</span>
+                                <span class="p-2 bg-gray-100 rounded text-center">50.1</span>
+                                <span class="p-2 bg-gray-100 rounded text-center">50.1</span>
+                                <span class="p-2 bg-gray-100 rounded text-center">50.2</span>
+                                <span class="p-2 bg-gray-100 rounded text-center">50.2</span>
+                                <span class="p-2 bg-gray-100 rounded text-center">50.3</span>
+                                <span class="p-2 bg-gray-100 rounded text-center">50.3</span>
+                                <span class="p-2 bg-gray-100 rounded text-center">50.4</span>
+                                <span class="p-2 bg-gray-100 rounded text-center">50.4</span>
+                                <span class="p-2 bg-gray-100 rounded text-center">50.5</span>
+                                <span class="p-2 bg-gray-100 rounded text-center">50.5</span>
+                                <span class="p-2 bg-gray-100 rounded text-center">50.6</span>
+                                <span class="p-2 bg-gray-100 rounded text-center">50.6</span>
+                                <span class="p-2 bg-gray-100 rounded text-center">50.7</span>
+                                <span class="p-2 bg-gray-100 rounded text-center">50.7</span>
+                                <span class="p-2 bg-gray-100 rounded text-center">50.8</span>
+                                <span class="p-2 bg-gray-100 rounded text-center">50.8</span>
+                                <span class="p-2 bg-gray-100 rounded text-center">50.9</span>
+                                <span class="p-2 bg-gray-100 rounded text-center">50.9</span>
+                                <span class="p-2 bg-gray-100 rounded text-center">51.0</span>
+                                <span class="p-2 bg-gray-100 rounded text-center">51.1</span>
+                                <span class="p-2 bg-gray-100 rounded text-center">51.2</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-lg font-semibold mb-3">Kvalitātes kontroles rezultāti:</h3>
+                        <div class="space-y-3">
+                            <div class="flex justify-between items-center p-3 bg-gray-100 rounded">
+                                <span class="font-medium">Q0 (Minimums):</span>
+                                <span class="font-bold accent-text">49.80 mm</span>
+                            </div>
+                            <div class="flex justify-between items-center p-3 bg-red-50 rounded">
+                                <span class="font-medium">Q1 (25%):</span>
+                                <span class="font-bold accent-text">50.20 mm</span>
+                            </div>
+                            <div class="flex justify-between items-center p-3 bg-blue-50 rounded">
+                                <span class="font-medium">Q2 (Mediāna):</span>
+                                <span class="font-bold accent-text">50.50 mm</span>
+                            </div>
+                            <div class="flex justify-between items-center p-3 bg-green-50 rounded">
+                                <span class="font-medium">Q3 (75%):</span>
+                                <span class="font-bold accent-text">50.80 mm</span>
+                            </div>
+                            <div class="flex justify-between items-center p-3 bg-gray-100 rounded">
+                                <span class="font-medium">Q4 (Maksimums):</span>
+                                <span class="font-bold accent-text">51.20 mm</span>
+                            </div>
+                            <div class="flex justify-between items-center p-3 bg-yellow-50 rounded">
+                                <span class="font-medium">IQR (Starpkvartīļu amplitūda):</span>
+                                <span class="font-bold accent-text">0.60 mm</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="qualityChart" class="chart-container"></div>
+                
+                <div class="insight-box">
+                    <h4 class="font-semibold mb-2">Kvalitātes analīze:</h4>
+                    <ul class="list-disc list-inside space-y-1 text-sm">
+                        <li>75% gultņu diametrs ir mazāks par 50.80 mm.</li>
+                        <li>Ražošanas mediāna ir 50.50 mm (tuvu normai 50 mm).</li>
+                        <li>Vidējie 50% izstrādājumu atrodas diapazonā 50.20-50.80 mm.</li>
+                        <li>Pieļaujamais diapazons bez izlecošām vērtībām: 49.30-51.70 mm.</li>
+                        <li>Visi izstrādājumi atrodas pieļaujamās robežās, izlecošu vērtību nav.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="example-card">
+                <h2 class="text-2xl font-bold mb-6 text-gray-900">Interaktīvs Piemērs</h2>
+                <p class="text-gray-700 mb-6">
+                    Pārbaudiet savas prasmes! Ievadiet savus datus un redziet, kā darbojas kvartīļu analīze:
+                </p>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                            Ievadiet datus (atdalīt ar komatu vai atstarpi):
+                        </label>
+                        <textarea 
+                            id="customData" 
+                            class="w-full h-24 p-4 border border-gray-300 rounded-lg resize-none"
+                            placeholder="Piemēram: 10, 15, 20, 25, 30, 35, 40, 45, 50"
+                        >15, 22, 28, 35, 41, 45, 48, 52, 58, 65, 72, 78, 85, 92, 98</textarea>
+                        <button onclick="analyzeCustomData()" class="mt-4 px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors">
+                            Analizēt
+                        </button>
+                    </div>
+                    
+                    <div>
+                        <div id="customResults" class="space-y-3">
+                            <div class="text-center text-gray-500 py-8">
+                                Ievadiet datus un nospiediet "Analizēt"
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="customChart" class="chart-container mt-6"></div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-gray-900 text-white py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p class="text-gray-400">© 2025 Interaktīvs Kvartīļu Kalkulators. Izglītības projekts.</p>
+        </div>
+    </footer>
+
+    <script>
+        let customChart = null;
+
+        // --- FUNKCIJAS NO index.html KVALITĀTES UN KONSEKVENCES NODROŠINĀŠANAI ---
+
+        /**
+         * Aprēķina mediānu dotajai sakārtotajai datu kopai.
+         */
+        function calculateMedian(data) {
+            const n = data.length;
+            if (n === 0) return NaN;
+            
+            const isOdd = n % 2 !== 0;
+
+            if (isOdd) {
+                // Nepāra N: vidējais elements
+                return data[Math.floor(n / 2)];
+            } else {
+                // Pāra N: vidējo divu elementu vidējais aritmētiskais
+                const mid1 = data[n / 2 - 1];
+                const mid2 = data[n / 2];
+                return (mid1 + mid2) / 2;
+            }
+        }
+
+        /**
+         * Aprēķina visas kvartīles, IQR, robežas un izlecošās vērtības (outliers).
+         */
+        function getQuartiles(dataArray) {
+            const sortedData = [...dataArray].sort((a, b) => a - b);
+            const n = sortedData.length;
+            
+            // Q0 (Minimums) un Q4 (Maksimums)
+            const Min = sortedData[0]; 
+            const Max = sortedData[n - 1]; 
+            
+            // 1. Q2 (Mediāna)
+            const Q2 = calculateMedian(sortedData);
+            
+            // 2. Datu sadalīšana
+            let lowerHalf, upperHalf;
+            const isOdd = n % 2 !== 0;
+            const medianIndex = Math.floor(n / 2);
+
+            if (isOdd) {
+                // Nepāra N: Izslēdzam Q2 elementu no abām pusēm
+                lowerHalf = sortedData.slice(0, medianIndex);
+                upperHalf = sortedData.slice(medianIndex + 1);
+            } else {
+                // Pāra N: Sadalām vienmērīgi
+                lowerHalf = sortedData.slice(0, medianIndex);
+                upperHalf = sortedData.slice(medianIndex);
+            }
+            
+            // 3. Q1 un Q3
+            const Q1 = calculateMedian(lowerHalf);
+            const Q3 = calculateMedian(upperHalf);
+            
+            // 4. IQR un Robežas
+            const IQR = Q3 - Q1;
+            const lowerBound = Q1 - 1.5 * IQR;
+            const upperBound = Q3 + 1.5 * IQR;
+
+            // 5. Izlecošas vērtības (Outliers) un "Ūsas" (Whiskers)
+            const outliers = sortedData.filter(x => x < lowerBound || x > upperBound);
+            const nonOutliers = sortedData.filter(x => x >= lowerBound && x <= upperBound);
+            
+            const minWhisker = nonOutliers.length > 0 ? nonOutliers[0] : sortedData[0];
+            const maxWhisker = nonOutliers.length > 0 ? nonOutliers[nonOutliers.length - 1] : sortedData[n-1];
+            
+            return {
+                sortedData, n, Q1, Q2, Q3, IQR, 
+                Min, Max, 
+                lowerBound, upperBound, 
+                outliers, 
+                minWhisker: minWhisker, 
+                maxWhisker: maxWhisker,
+                lowerHalf, upperHalf
+            };
+        }
+
+
+        // --- ПЕРЕРАБОТАННАЯ ФУНКЦИЯ АНАЛИЗА ---
+        function analyzeCustomData() {
+            const dataInput = document.getElementById('customData').value;
+            const dataArray = dataInput.split(/[\s,]+/).map(x => parseFloat(x.trim())).filter(x => !isNaN(x));
+            
+            const resultsDiv = document.getElementById('customResults');
+            
+            if (dataArray.length < 4) {
+                resultsDiv.innerHTML = `<div class="text-center text-red-500 py-8 font-bold">Lūdzu, ievadiet vismaz 4 skaitliskas vērtības.</div>`;
+                if (customChart) customChart.clear();
+                return;
+            }
+            
+            const results = getQuartiles(dataArray);
+            const { Q1, Q2, Q3, IQR, Min, Max, outliers } = results;
+            
+            // Display results
+            resultsDiv.innerHTML = `
+                <div class="flex justify-between items-center p-3 bg-gray-100 rounded">
+                    <span class="font-medium">Q0 (Minimums):</span>
+                    <span class="font-bold accent-text">${Min.toFixed(2)}</span>
+                </div>
+                <div class="flex justify-between items-center p-3 bg-red-50 rounded">
+                    <span class="font-medium">Q1 (25%):</span>
+                    <span class="font-bold accent-text">${Q1.toFixed(2)}</span>
+                </div>
+                <div class="flex justify-between items-center p-3 bg-blue-50 rounded">
+                    <span class="font-medium">Q2 (Mediāna):</span>
+                    <span class="font-bold accent-text">${Q2.toFixed(2)}</span>
+                </div>
+                <div class="flex justify-between items-center p-3 bg-green-50 rounded">
+                    <span class="font-medium">Q3 (75%):</span>
+                    <span class="font-bold accent-text">${Q3.toFixed(2)}</span>
+                </div>
+                <div class="flex justify-between items-center p-3 bg-gray-100 rounded">
+                    <span class="font-medium">Q4 (Maksimums):</span>
+                    <span class="font-bold accent-text">${Max.toFixed(2)}</span>
+                </div>
+                <div class="flex justify-between items-center p-3 bg-yellow-50 rounded">
+                    <span class="font-medium">IQR (Starpkvartīļu amplitūda):</span>
+                    <span class="font-bold accent-text">${IQR.toFixed(2)}</span>
+                </div>
+                <div class="p-3 bg-gray-100 rounded text-sm">
+                    <span class="font-medium text-primary-color">Izlecošas vērtības:</span>
+                    <span class="font-bold text-red-600">${outliers.length > 0 ? outliers.join(', ') : 'Nav'}</span>
+                </div>
+            `;
+            
+            // Create chart (Box Plot for better visualization)
+            if (!customChart) {
+                customChart = echarts.init(document.getElementById('customChart'));
+            }
+
+            const boxPlotData = [[results.minWhisker, Q1, Q2, Q3, results.maxWhisker]];
+            const outlierData = outliers.map(o => [0, o]);
+            
+            customChart.setOption({
+                title: { text: 'Jūsu datu kastes diagramma', left: 'center' },
+                tooltip: {
+                    trigger: 'item',
+                    axisPointer: { type: 'shadow' },
+                    formatter: function (param) {
+                        if (param.seriesName === 'Boxplot') {
+                            return 'Kvartīļu kaste:<br>'
+                                + 'Minimālā "Ūsa": ' + param.data[0].toFixed(2) + '<br>'
+                                + 'Q1: ' + param.data[1].toFixed(2) + '<br>'
+                                + 'Mediāna (Q2): ' + param.data[2].toFixed(2) + '<br>'
+                                + 'Q3: ' + param.data[3].toFixed(2) + '<br>'
+                                + 'Maksimālā "Ūsa": ' + param.data[4].toFixed(2);
+                        }
+                        if (param.seriesName === 'Izlecošas vērtības') {
+                             return 'Izlecoša vērtība: ' + param.data[1].toFixed(2);
+                        }
+                    }
+                },
+                grid: { left: '10%', right: '10%', bottom: '15%', top: '20%' },
+                xAxis: { type: 'category', data: ['Datu Kopa'], boundaryGap: true, splitArea: { show: false } },
+                yAxis: { type: 'value', name: 'Vērtības', splitArea: { show: true } },
+                series: [
+                    {
+                        name: 'Izlecošas vērtības',
+                        type: 'scatter',
+                        data: outlierData,
+                        symbolSize: 8,
+                        itemStyle: { color: '#C53030' }
+                    },
+                    {
+                        name: 'Boxplot',
+                        type: 'boxplot',
+                        data: boxPlotData,
+                        boxFill: '#7C3AED', 
+                        itemStyle: { borderColor: '#2D3748', borderWidth: 1.5 }
+                    }
+                ]
+            }, true); // 'true' ensures the chart is fully re-rendered
+        }
+
+        // Initialize static charts and animations on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeCharts();
+            
+            // Animate elements
+            anime({
+                targets: '.hero-title',
+                translateY: [50, 0],
+                opacity: [0, 1],
+                duration: 1000,
+                easing: 'easeOutQuart'
+            });
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        anime({
+                            targets: entry.target,
+                            translateY: [50, 0],
+                            opacity: [0, 1],
+                            duration: 800,
+                            easing: 'easeOutQuart'
+                        });
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            document.querySelectorAll('.example-card').forEach(card => {
+                observer.observe(card);
+            });
+            
+            // --- ИСПРАВЛЕНИЕ: Автоматически запустить анализ при загрузке страницы ---
+            analyzeCustomData(); 
+        });
+
+        function initializeCharts() {
+            // Static example charts (using bar chart for simplicity in examples)
+            
+            // Income distribution chart
+            const incomeChart = echarts.init(document.getElementById('incomeChart'));
+            incomeChart.setOption({
+                title: { text: 'Ienākumu sadalījums', left: 'center' },
+                tooltip: { trigger: 'axis' },
+                xAxis: { type: 'category', data: ['Q1', 'Q2', 'Q3'] },
+                yAxis: { type: 'value', name: 'Ienākumi (tūkst. EUR)' },
+                series: [{
+                    data: [35, 44, 57.5],
+                    type: 'bar',
+                    itemStyle: { color: '#C53030' },
+                    label: { show: true, position: 'top' }
+                }]
+            });
+
+            // Test scores chart
+            const scoresChart = echarts.init(document.getElementById('scoresChart'));
+            scoresChart.setOption({
+                title: { text: 'Eksāmena punktu sadalījums', left: 'center' },
+                tooltip: { trigger: 'axis' },
+                xAxis: { type: 'category', data: ['Q1', 'Q2', 'Q3'] },
+                yAxis: { type: 'value', name: 'Punkti' },
+                series: [{
+                    data: [78, 85, 92],
+                    type: 'bar',
+                    itemStyle: { color: '#2563EB' },
+                    label: { show: true, position: 'top' }
+                }]
+            });
+
+            // Quality control chart
+            const qualityChart = echarts.init(document.getElementById('qualityChart'));
+            qualityChart.setOption({
+                title: { text: 'Ražošanas kvalitātes kontrole', left: 'center' },
+                tooltip: { trigger: 'axis' },
+                xAxis: { type: 'category', data: ['Q1', 'Q2', 'Q3'] },
+                yAxis: { type: 'value', name: 'Diametrs (mm)' },
+                series: [{
+                    data: [50.2, 50.5, 50.8],
+                    type: 'bar',
+                    itemStyle: { color: '#059669' },
+                    label: { show: true, position: 'top' }
+                }]
+            });
+        }
+    </script>
+</body>
+</html>
