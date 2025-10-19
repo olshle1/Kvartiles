@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kvartīļu Piemēri - Reāla Pielietošana</title>
+    <title>Kvartīļu Piemēri - Reāla pielietošana</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.3/echarts.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
@@ -427,7 +427,7 @@
 
     <footer class="bg-gray-900 text-white py-8">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <p class="text-gray-400">© 2025 Interaktīvs Kvartīļu Kalkulators. Izglītības projekts.</p>
+            <p class="text-gray-400">© 2025 Interaktīvs kvartīļu kalkulators. Izglītības projekts.</p>
         </div>
     </footer>
 
@@ -457,7 +457,7 @@
         }
 
         /**
-         * Aprēķina visas kvartīles, IQR, robežas un izlecošās vērtības (outliers).
+         * Aprēķina visas kvartīles, IQR (starpkvartīļu ampliutūdu) un izlecošās vērtības.
          */
         function getQuartiles(dataArray) {
             const sortedData = [...dataArray].sort((a, b) => a - b);
@@ -494,7 +494,7 @@
             const lowerBound = Q1 - 1.5 * IQR;
             const upperBound = Q3 + 1.5 * IQR;
 
-            // 5. Izlecošas vērtības (Outliers) un "Ūsas" (Whiskers)
+            // 5. Izlecošas vērtības un "Ūsas"
             const outliers = sortedData.filter(x => x < lowerBound || x > upperBound);
             const nonOutliers = sortedData.filter(x => x >= lowerBound && x <= upperBound);
             
@@ -513,7 +513,7 @@
         }
 
 
-        // --- ПЕРЕРАБОТАННАЯ ФУНКЦИЯ АНАЛИЗА ---
+        // --- PĀRSTRĀDĀTA ANALĪZES FUNKCIJA ---
         function analyzeCustomData() {
             const dataInput = document.getElementById('customData').value;
             const dataArray = dataInput.split(/[\s,]+/).map(x => parseFloat(x.trim())).filter(x => !isNaN(x));
@@ -642,7 +642,7 @@
                 observer.observe(card);
             });
             
-            // --- ИСПРАВЛЕНИЕ: Автоматически запустить анализ при загрузке страницы ---
+            // --- LABOJUMS: Automātiski palaist analīzi lapas ielādes laikā ---
             analyzeCustomData(); 
         });
 
@@ -696,4 +696,5 @@
         }
     </script>
 </body>
+
 </html>
