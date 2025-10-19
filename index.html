@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kvartīļu Kalkulators un Box Plot</title>
+    <title>Kvartīļu Kalkulators un Kastu diagramma</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.3/echarts.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
@@ -157,7 +157,7 @@
     <script>
         let boxplotChart = null;
         
-        // --- JAUNA LOĢIKA KVARTĪĻU APRĒĶINĀŠANAI (Mediānas Metode) ---
+        // --- KVARTĪĻU APRĒĶINĀŠANA (Mediānas Metode) ---
 
         /**
          * Aprēķina mediānu dotajai sakārtotajai datu kopai.
@@ -217,7 +217,7 @@
             const lowerBound = Q1 - 1.5 * IQR;
             const upperBound = Q3 + 1.5 * IQR;
 
-            // 5. Izlecošas vērtības (Outliers) un "Ūsas" (Whiskers)
+            // 5. Izlecošas vērtības un "Ūsas"
             const outliers = sortedData.filter(x => x < lowerBound || x > upperBound);
             const nonOutliers = sortedData.filter(x => x >= lowerBound && x <= upperBound);
             
@@ -269,10 +269,10 @@
                  stepsDiv.innerHTML += `<li>**2. Solis: Atrodiet Mediānu (Q2):** Q2 = ${Q2.toFixed(2)} (Vidējais aritmētiskais. Datu kopa (${n}) ir **pāra**, sadalīta divās vienādās pusēs).</li>`;
             }
             
-            stepsDiv.innerHTML += `<li>**3. Solis: Aprēķināt Q1 (Apakšējās puses mediāna):** Dati: [${lowerHalf.join(', ')}], Q1 = ${Q1.toFixed(2)}</li>`;
-            stepsDiv.innerHTML += `<li>**4. Solis: Aprēķināt Q3 (Augšējās puses mediāna):** Dati: [${upperHalf.join(', ')}], Q3 = ${Q3.toFixed(2)}</li>`;
-            stepsDiv.innerHTML += `<li>**5. Solis: Aprēķināt Starpkvartīļu Diapazonu (IQR):** IQR = Q3 - Q1 = ${Q3.toFixed(2)} - ${Q1.toFixed(2)} = ${IQR.toFixed(2)}</li>`;
-            stepsDiv.innerHTML += `<li>**6. Solis: Aprēķināt Robežas:** Apakšējā Robeža = ${Q1.toFixed(2)} - 1.5 * ${IQR.toFixed(2)} = ${lowerBound.toFixed(2)} | Augšējā Robeža = ${Q3.toFixed(2)} + 1.5 * ${IQR.toFixed(2)} = ${upperBound.toFixed(2)}</li>`;
+            stepsDiv.innerHTML += `<li>**3. Solis: Aprēķināt Q1 (Apakšējās daļas mediāna):** Dati: [${lowerHalf.join(', ')}], Q1 = ${Q1.toFixed(2)}</li>`;
+            stepsDiv.innerHTML += `<li>**4. Solis: Aprēķināt Q3 (Augšējās daļas mediāna):** Dati: [${upperHalf.join(', ')}], Q3 = ${Q3.toFixed(2)}</li>`;
+            stepsDiv.innerHTML += `<li>**5. Solis: Aprēķināt starpkvartīļu amplitūdu (IQR):** IQR = Q3 - Q1 = ${Q3.toFixed(2)} - ${Q1.toFixed(2)} = ${IQR.toFixed(2)}</li>`;
+            stepsDiv.innerHTML += `<li>**6. Solis: Aprēķināt Q0 un Q4:** Min = ${Q1.toFixed(2)} - 1.5 * ${IQR.toFixed(2)} = ${lowerBound.toFixed(2)} | Max = ${Q3.toFixed(2)} + 1.5 * ${IQR.toFixed(2)} = ${upperBound.toFixed(2)}</li>`;
 
 
             // Display Results
@@ -339,7 +339,7 @@
             const option = {
                 title: [
                     {
-                        text: 'Kvartīļu Pielietojuma Diagramma',
+                        text: 'Kastu diagramma',
                         left: 'center'
                     }
                 ],
@@ -351,14 +351,14 @@
                     formatter: function (param) {
                         if (param.seriesName === 'Boxplot') {
                             return 'Kvartīļu kaste:<br>'
-                                + 'Minimālā "Ūsa": ' + param.data[0].toFixed(2) + '<br>' // Min whisker
+                                + 'Minimālā "Ūsa": ' + param.data[0].toFixed(2) + '<br>' // Minimālā "Ūsa"
                                 + 'Q1 (Pirmā kvartīle): ' + param.data[1].toFixed(2) + '<br>'
                                 + 'Mediāna (Q2): ' + param.data[2].toFixed(2) + '<br>'
                                 + 'Q3 (Trešā kvartīle): ' + param.data[3].toFixed(2) + '<br>'
-                                + 'Maksimālā "Ūsa": ' + param.data[4].toFixed(2) + '<br>' // Max whisker
+                                + 'Maksimālā "Ūsa": ' + param.data[4].toFixed(2) + '<br>' // Maksimālā "Ūsa"
                                 + 'IQR: ' + (param.data[3] - param.data[1]).toFixed(2);
                         }
-                        // ИСПРАВЛЕНИЕ: Проверка имени серии на 'Izlecošas vērtības'
+                        // LABOJUMS: Pārbaudījums sērijas nosaukumu uz 'Izlecošas vērtības'
                         if (param.seriesName === 'Izlecošas vērtības') {
                              return 'Izlecoša vērtība (Outlier): ' + param.data[1].toFixed(2);
                         }
@@ -387,7 +387,7 @@
                 },
                 series: [
                     {
-                        // Имя серии для выбросов
+                        // Sērijas nosaukums izlecošām vērtībām
                         name: 'Izlecošas vērtības',
                         type: 'scatter',
                         data: outlierData,
@@ -401,7 +401,7 @@
                         data: boxPlotData,
                         boxFill: '#90CDF4', // Blue color for the box
                         itemStyle: {
-                            borderColor: '#2D3748', // Dark border for Scholarly Modernism
+                            borderColor: '#2D3748', // Tumša robeža skolas modernismam
                             borderWidth: 1.5
                         },
                         tooltip: { trigger: 'item' }
@@ -426,7 +426,7 @@
                 easing: 'easeOutQuart'
             });
 
-            // Intersection Observer for other cards
+            // Krustojumu novērotājs citām kartēm
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -450,4 +450,5 @@
         });
     </script>
 </body>
+
 </html>
