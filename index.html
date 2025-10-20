@@ -274,6 +274,7 @@
             stepsDiv.innerHTML += `<li>5. Solis: Aprēķiniet starpkvartīļu amplitūdu (IQR): IQR = Q3 - Q1 = ${Q3.toFixed(2)} - ${Q1.toFixed(2)} = ${IQR.toFixed(2)}</li>`;
             stepsDiv.innerHTML += `<li>6. Solis: Atrodiet Q0 un Q4: Min = ${Min.toFixed(2)}; Max = ${Max.toFixed(2)}</li>`;
             stepsDiv.innerHTML += `<li>7. Solis: Atrodiet izlecošas vērtibas, kuri nepieder intervālam [Q1 - 1,5*IQR; Q3+1,5*IQR] = [${lowerBound.toFixed(2)}; ${upperBound.toFixed(2)}]</li>`;
+            <span class="font-bold text-red-600">${outliers.length > 0 ? outliers.join(', ') : 'Nav'}</span>
 
             // Display Results
             resultsDiv.innerHTML = `
@@ -452,6 +453,7 @@
 </body>
 
 </html>
+
 
 
 
