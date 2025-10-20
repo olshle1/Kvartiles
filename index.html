@@ -274,9 +274,7 @@
             stepsDiv.innerHTML += `<li>5. Solis: Aprēķiniet starpkvartīļu amplitūdu (IQR): IQR = Q3 - Q1 = ${Q3.toFixed(2)} - ${Q1.toFixed(2)} = ${IQR.toFixed(2)}</li>`;
             stepsDiv.innerHTML += `<li>6. Solis: Atrodiet Q0 un Q4: Min = ${Min.toFixed(2)}; Max = ${Max.toFixed(2)}</li>`;
             stepsDiv.innerHTML += `<li>6. Solis: Atrodiet izlecošas vērtibas, kuri nepieder intervālam [Q1 - 1,5*IQR; Q3+1,5*IQR] = [${lowerBound.toFixed(2)}; ${upperBound.toFixed(2)}]</li>`;
-            <div class="p-3 bg-gray-100 rounded text-sm">
-                        <span class="font-bold text-red-600"> Tas ir ${outliers.length > 0 ? outliers.join(', ') : 'Tādu nav'}</span>
-                    </div>
+            
 
             // Display Results
             resultsDiv.innerHTML = `
@@ -455,6 +453,7 @@
 </body>
 
 </html>
+
 
 
 
