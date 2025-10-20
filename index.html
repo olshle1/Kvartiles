@@ -261,18 +261,19 @@
             const { sortedData, n, Q1, Q2, Q3, IQR, Min, Max, lowerBound, upperBound, outliers, lowerHalf, upperHalf } = results;
 
             // Display Steps
-            stepsDiv.innerHTML += `<li>**1. Solis: Sakārtojiet datus:** ${sortedData.join(', ')} (N = ${n})</li>`;
+            stepsDiv.innerHTML += `<li>1. Solis: Sakārtojiet datus: ${sortedData.join(', ')} (N = ${n})</li>`;
             
             if (n % 2 !== 0) {
-                 stepsDiv.innerHTML += `<li>**2. Solis: Atrodiet Mediānu (Q2):** Q2 = ${Q2.toFixed(2)} (Vidējā vērtība. Datu kopa (${n}) ir **nepāra**, Q2 (${Q2.toFixed(2)}) tiek izslēgts no apakšējās un augšējās puses).</li>`;
+                 stepsDiv.innerHTML += `<li>2. Solis: Atrodiet Mediānu (Q2): Q2 = ${Q2.toFixed(2)} (Pāra datu skaits, tāpēc Q2 ir divu vidējo skaitļu aritmētiskais vidējais)</li>`;
             } else {
-                 stepsDiv.innerHTML += `<li>**2. Solis: Atrodiet Mediānu (Q2):** Q2 = ${Q2.toFixed(2)} (Vidējais aritmētiskais. Datu kopa (${n}) ir **pāra**, sadalīta divās vienādās pusēs).</li>`;
+                 stepsDiv.innerHTML += `<li>2. Solis: Atrodiet Mediānu (Q2): Q2 = ${Q2.toFixed(2)} (Nepāra datu skaits, tāpēc Q2 ir vidējais skaitlis).</li>`;
             }
             
-            stepsDiv.innerHTML += `<li>**3. Solis: Aprēķināt Q1 (Apakšējās daļas mediāna):** Dati: [${lowerHalf.join(', ')}], Q1 = ${Q1.toFixed(2)}</li>`;
-            stepsDiv.innerHTML += `<li>**4. Solis: Aprēķināt Q3 (Augšējās daļas mediāna):** Dati: [${upperHalf.join(', ')}], Q3 = ${Q3.toFixed(2)}</li>`;
-            stepsDiv.innerHTML += `<li>**5. Solis: Aprēķināt starpkvartīļu amplitūdu (IQR):** IQR = Q3 - Q1 = ${Q3.toFixed(2)} - ${Q1.toFixed(2)} = ${IQR.toFixed(2)}</li>`;
-            stepsDiv.innerHTML += `<li>**6. Solis: Aprēķināt Q0 un Q4:** Min = ${Q1.toFixed(2)} - 1.5 * ${IQR.toFixed(2)} = ${lowerBound.toFixed(2)} | Max = ${Q3.toFixed(2)} + 1.5 * ${IQR.toFixed(2)} = ${upperBound.toFixed(2)}</li>`;
+            stepsDiv.innerHTML += `<li>3. Solis: Aprēķiniet Q1 (Apakšējās daļas mediāna): Dati: [${lowerHalf.join(', ')}], Q1 = ${Q1.toFixed(2)}</li>`;
+            stepsDiv.innerHTML += `<li>4. Solis: Aprēķiniet Q3 (Augšējās daļas mediāna): Dati: [${upperHalf.join(', ')}], Q3 = ${Q3.toFixed(2)}</li>`;
+            stepsDiv.innerHTML += `<li>5. Solis: Aprēķiniet starpkvartīļu amplitūdu (IQR): IQR = Q3 - Q1 = ${Q3.toFixed(2)} - ${Q1.toFixed(2)} = ${IQR.toFixed(2)}</li>`;
+            stepsDiv.innerHTML += `<li>6. Solis: Atrodiet Q0 un Q4: Min = ${Min.toFixed(2)}; Max = ${Max.toFixed(2)}</li>`;
+            stepsDiv.innerHTML += `<li>6. Solis: Atrodiet izlecošas vērtibas, kuri nepieder intervālam [Q1 - 1,5*IQR; Q3+1,5*IQR], tas ir [${Q1.toFixed(2)} - 1.5 * ${IQR.toFixed(2)} = ${lowerBound.toFixed(2)}; ${Q3.toFixed(2)} + 1.5 * ${IQR.toFixed(2)} = ${upperBound.toFixed(2)}]</li>`;
 
 
             // Display Results
@@ -452,3 +453,4 @@
 </body>
 
 </html>
+
