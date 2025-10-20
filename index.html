@@ -212,7 +212,7 @@ function calculateQuartiles() {
     stepsDiv.innerHTML += `<li>5. Solis: IQR = Q3 − Q1 = ${IQR.toFixed(2)}</li>`;
     stepsDiv.innerHTML += `<li>6. Solis: Robežas: [Q1 − 1,5·IQR; Q3 + 1,5·IQR] = [${lowerBound.toFixed(2)}; ${upperBound.toFixed(2)}]</li>`;
     stepsDiv.innerHTML += `<li>7. Solis: Izlecošas vērtības: ${outliers.length ? outliers.join(', ') : 'nav'}</li>`;
-    stepsDiv.innerHTML += `<li>8. Solis: Ja ir izlecošas vērtības, tad "ūsu" robežas ir: minimālā = ${minWhisker.toFixed(2)}, maksimālā = ${maxWhisker.toFixed(2)}</li>`;
+    stepsDiv.innerHTML += `<li>8. Solis: Noteicam Q0 un Q4, izņemot izlecošas vērtības: Q0 = ${minWhisker.toFixed(2)}, Q4 = ${maxWhisker.toFixed(2)}</li>`;
 
     /* ----- rezultāti ----- */
     resultsDiv.innerHTML = `
@@ -360,4 +360,5 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 </body>
+
 </html>
