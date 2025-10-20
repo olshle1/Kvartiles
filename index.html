@@ -275,8 +275,8 @@
             stepsDiv.innerHTML += `<li>6. Solis: Atrodiet Q0 un Q4: Min = ${Min.toFixed(2)}; Max = ${Max.toFixed(2)}</li>`;
             stepsDiv.innerHTML += `<li>6. Solis: Atrodiet izlecošas vērtibas, kuri nepieder intervālam [Q1 - 1,5*IQR; Q3+1,5*IQR] = [${lowerBound.toFixed(2)}; ${upperBound.toFixed(2)}]</li>`;
             <div class="p-3 bg-gray-100 rounded text-sm">
-                        <span class="font-medium text-primary-color"></span>
-                        <span class="font-bold text-red-600">${outliers.length > 0 ? outliers.join(', ') : 'Tādu nav'}</span>
+                        <span class="font-medium text-primary-color">Izl</span>
+                        <span class="font-bold text-red-600">${outliers.length > 0 ? outliers.join(', ') : 'Nav'}</span>
                     </div>
 
             // Display Results
@@ -456,6 +456,7 @@
 </body>
 
 </html>
+
 
 
 
