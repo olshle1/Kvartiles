@@ -111,7 +111,7 @@
                 </div>
 
                 <div class="content-card mt-8">
-                    <h2 class="text-2xl font-bold mb-4">Solu pa solim atrisinājums</h2>
+                    <h2 class="text-2xl font-bold mb-4">Atrisinājums</h2>
                     <ul id="steps" class="step-list text-gray-700 space-y-2">
                         <li>Ievadiet datus, lai redzētu aprēķinu soļus.</li>
                     </ul>
@@ -201,18 +201,18 @@ function calculateQuartiles() {
     const { sortedData, n, Q1, Q2, Q3, IQR, Min, Max, lowerBound, upperBound, outliers, lowerHalf, upperHalf, minWhisker, maxWhisker } = results;
 
     /* ----- soļi ----- */
-    stepsDiv.innerHTML += `<li>1. Solis: Sakārtojiet datus: ${sortedData.join(', ')} (N = ${n})</li>`;
+    stepsDiv.innerHTML += `<li>1. Sakārtojiet datus: ${sortedData.join(', ')} (N = ${n})</li>`;
     if (n % 2 !== 0) {
         stepsDiv.innerHTML += `<li>2. Solis: Atrodiet Mediānu (Q2): Q2 = ${Q2.toFixed(2)} (nepāra N – vidējais elements).</li>`;
     } else {
         stepsDiv.innerHTML += `<li>2. Solis: Atrodiet Mediānu (Q2): Q2 = ${Q2.toFixed(2)} (pāra N – vidējo divu aritm. vidējais).</li>`;
     }
-    stepsDiv.innerHTML += `<li>3. Solis: Aprēķiniet Q1 (apakšpuses mediāna): [${lowerHalf.join(', ')}] → Q1 = ${Q1.toFixed(2)}</li>`;
-    stepsDiv.innerHTML += `<li>4. Solis: Aprēķiniet Q3 (augšpuses mediāna): [${upperHalf.join(', ')}] → Q3 = ${Q3.toFixed(2)}</li>`;
-    stepsDiv.innerHTML += `<li>5. Solis: IQR = Q3 − Q1 = ${IQR.toFixed(2)}</li>`;
-    stepsDiv.innerHTML += `<li>6. Solis: Robežas: [Q1 − 1,5·IQR; Q3 + 1,5·IQR] = [${lowerBound.toFixed(2)}; ${upperBound.toFixed(2)}]</li>`;
-    stepsDiv.innerHTML += `<li>7. Solis: Izlecošas vērtības: ${outliers.length ? outliers.join(', ') : 'nav'}</li>`;
-    stepsDiv.innerHTML += `<li>8. Solis: Noteicam Q0 un Q4, izņemot izlecošas vērtības: Q0 = ${minWhisker.toFixed(2)}, Q4 = ${maxWhisker.toFixed(2)}</li>`;
+    stepsDiv.innerHTML += `<li>3. Aprēķinam Q1 (kreisas daļas mediāna): [${lowerHalf.join(', ')}] → Q1 = ${Q1.toFixed(2)}</li>`;
+    stepsDiv.innerHTML += `<li>4. Aprēķinam Q3 (labas daļas mediāna): [${upperHalf.join(', ')}] → Q3 = ${Q3.toFixed(2)}</li>`;
+    stepsDiv.innerHTML += `<li>5. Aprēķinam starpkvartīlu amplitūdu: IQR = Q3 − Q1 = ${IQR.toFixed(2)}</li>`;
+    stepsDiv.innerHTML += `<li>6. Robežas: [Q1 − 1,5·IQR; Q3 + 1,5·IQR] = [${lowerBound.toFixed(2)}; ${upperBound.toFixed(2)}]</li>`;
+    stepsDiv.innerHTML += `<li>7. Izlecošas vērtības: ${outliers.length ? outliers.join(', ') : 'nav'}</li>`;
+    stepsDiv.innerHTML += `<li>8. Noteicam Q0 un Q4, izņemot izlecošas vērtības: Q0 = ${minWhisker.toFixed(2)}, Q4 = ${maxWhisker.toFixed(2)}</li>`;
 
     /* ----- rezultāti ----- */
     resultsDiv.innerHTML = `
@@ -362,4 +362,5 @@ document.addEventListener('DOMContentLoaded', () => {
 </body>
 
 </html>
+
 
