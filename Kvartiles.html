@@ -229,7 +229,7 @@ function calculateQuartiles() {
     stepsDiv.innerHTML += `<li>4. Aprēķinam Q3 (labas daļas mediāna): ${formatDataArray(upperHalf, true)} → Q3 = ${formatNumber(Q3)}</li>`;
     stepsDiv.innerHTML += `<li>5. Aprēķinam starpkvartīlu amplitūdu: IQR = Q3 − Q1 = ${formatNumber(Q3)} − ${formatNumber(Q1)} = ${formatNumber(IQR)}</li>`;
     stepsDiv.innerHTML += `<li>6. Robežas: [Q1 − 1,5·IQR; Q3 + 1,5·IQR] = [${formatNumber(lowerBound)}; ${formatNumber(upperBound)}]</li>`;
-    stepsDiv.innerHTML += `<li>7. Izlecošas vērtības: ${outliers.length ? formatDataArray(outliers) (jo atrodas ārpus šī diapazona): 'nav'}</li>`;
+    stepsDiv.innerHTML += `<li>7. Izlecošas vērtības: ${outliers.length ? formatDataArray(outliers) (atrodas ārpus šī diapazona): 'nav'}</li>`;
     stepsDiv.innerHTML += `<li>8. Noteicam Q0 un Q4, izņemot izlecošas vērtības: Q0 = ${formatNumber(minWhisker)}, Q4 = ${formatNumber(maxWhisker)}</li>`;
 
     /* ----- rezultāti (Ar formatēšanu) ----- */
@@ -397,4 +397,5 @@ document.addEventListener('DOMContentLoaded', () => {
 </body>
 
 </html>
+
 
