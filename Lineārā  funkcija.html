@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+
+<html lang="lv">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Lineārās Funkcijas Kalkulators</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Oranienbaum&family=Quattrocento+Sans:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+
+        /* --- Saglabāts sākotnējais dizains --- */
+
+        :root {
+
+            --bg-color: #FEFEFE;
+
+            --primary-color: #2D3748;
+
+            --secondary-color: #4A5568;
+
+            --accent-color: #C53030;
+
+            --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+
+        }
+
+        body {
+
+            font-family: 'Quattrocento Sans', sans-serif;
+
+            background-color: var(--bg-color);
+
+            color: var(--primary-color);
+
+        }
+
+        .hero-title {
+
+            font-family: 'Oranienbaum', serif;
+
+            font-size: 3.5rem;
+
+            line-height: 1.1;
+
+            color: var(--primary-color);
+
+        }
+
+        .accent-text { color: var(--accent-color); }
+
+        .content-card {
+
+            background-color: white;
+
+            border-radius: 12px;
+
+            padding: 2.5rem;
+
+            box-shadow: var(--card-shadow);
+
+            border: 1px solid #e2e8f0;
+
+        }
+
+        .hero-bg {
+
+            background: linear-gradient(135deg, #FEFEFE 0%, #f7f7f7 100%);
+
+            border-bottom: 2px solid #e2e8f0;
+
+        }
+
+        .step-list li { position: relative; padding-left: 1.5rem; margin-bottom: 0.5rem; }
+
+        .step-list li::before {
+
+            content: '✓';
+
+            position: absolute;
+
+            left: 0;
+
+            color: var(--accent-color);
+
+            font-weight: bold;
+
+        }
+
+        /* Formula stilam */
+
+        .math-formula {
+
+            font-family: monospace;
+
+            font-size: 1.1rem;
+
+            background-color: #f7fafc;
+
+            padding: 8px;
+
+            border-radius: 4px;
+
+            margin-top: 5px;
+
+            border-left: 3px solid var(--accent-color);
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+
+
+
+
+<header class="hero-bg py-16">
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <div class="text-center">
+
+            <h1 class="hero-title mb-4">
+
+                Lineārās funkcijas
+
+                <span class="accent-text block sm:inline">formula</span>
+
+            </h1>
+
+            <p class="text-xl text-secondary-color max-w-3xl mx-auto leading-relaxed">
+
+                Dota funkcija y = kx + b un divi taisnes punkti A un B. Aprēķiniet virziena koeficientu k, dalot Δy ar Δx. Ievietojiet formulā viena punkta koordinātas un aprēķiniet b.
+
+            </p>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+
+<main class="py-16">
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+
+            <div class="lg:col-span-1">
+
+                <div class="content-card mb-10">
+
+                    <h2 class="text-2xl font-bold mb-4">Datu ievade (Punkti)</h2>
+
+                    
+
+                   <label class="block text-base font-medium text-gray-700 mb-2">1. punkts A(x₁, y₁):</label>
+
+<div class="flex space-x-4 mb-4">
+
+    <input type="number" id="x1Input" value="2"
+
+        class="w-1/2 p-3 border border-gray-300 rounded-lg focus:ring-red-500 focus:border-red-500 text-center"
+
+        placeholder="x1 (Piem: 2)">
+
+    <input type="number" id="y1Input" value="5"
+
+        class="w-1/2 p-3 border border-gray-300 rounded-lg focus:ring-red-500 focus:border-red-500 text-center"
+
+        placeholder="y1 (Piem: 5)">
+
+</div>
+
+
+
+<label class="block text-base font-medium text-gray-700 mb-2">2. punkts B(x₂, y₂):</label>
+
+<div class="flex space-x-4">
+
+    <input type="number" id="x2Input" value="6"
+
+        class="w-1/2 p-3 border border-gray-300 rounded-lg focus:ring-red-500 focus:border-red-500 text-center"
+
+        placeholder="x2 (Piem: 6)">
+
+    <input type="number" id="y2Input" value="13"
+
+        class="w-1/2 p-3 border border-gray-300 rounded-lg focus:ring-red-500 focus:border-red-500 text-center"
+
+        placeholder="y2 (Piem: 13)">
+
+</div>
+
+                    
+
+
+
+                    <button onclick="calculateFunction()"
+
+                            class="w-full mt-6 px-4 py-2 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 transition-colors">
+
+                        Spied, lai redzētu rezultātu.
+
+                    </button>
+
+
+
+                    <div id="results" class="mt-8 space-y-4">
+
+                        </div>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="lg:col-span-2">
+
+                <div class="content-card">
+
+                    <h2 class="text-2xl font-bold mb-4">Atrisinājums.</h2>
+
+                    <ul id="steps" class="step-list text-gray-700 space-y-4">
+
+                        <li>Ievadiet koordinātas, lai redzētu aprēķinu soļus.</li>
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+
+<footer class="bg-gray-100 mt-16 py-8 border-t border-gray-200">
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-secondary-color text-sm">
+
+        <p>&copy; 2025 Interaktīvais lineārās funkcijas kalkulators. Izglītības projekts.</p>
+
+    </div>
+
+</footer>
+
+
+
+<script>
+
+/* ---------- PALĪGFUNKCIJAS FORMATĒŠANAI ---------- */
+
+// ФУНКЦИЯ: Помогает окружить отрицательные числа скобками для шагов решения (умножение, деление)
+function encloseNegative(num) {
+    const rawNum = formatRaw(num);
+    if (num < 0) {
+        return `(${rawNum})`;
+    }
+    return rawNum;
+}
+
+function formatSubtraction(x2, x1) {
+    const x1_raw = formatRaw(x1);
+    const x2_raw = formatRaw(x2);
+    
+    if (x1 >= 0) {
+        // Случай: x2 - x1 (напр., 6 - 2)
+        return `${x2_raw} - ${x1_raw}`;
+    } else {
+        // Случай: x2 - (-x1) = x2 + x1 (напр., 2 - (-1) = 2 + 1)
+        // Отображаем 2 - (-1)
+        return `${x2_raw} - (${x1_raw})`;
+    }
+}
+
+// Funkcija skaitļa formatēšanai ar komatu kā decimālzīmi
+
+function formatNumber(num) {
+
+    if (isNaN(num)) return 'NaN';
+
+    
+
+    // Noapaļošana līdz 2 zīmēm aiz komata, ja nav vesels skaitlis
+
+    let formatted = Math.round(num * 100) / 100;
+
+    
+
+    // Pārveido skaitli par virkni un aizstāj punktu ar komatu
+
+    let str = formatted.toString().replace('.', ',');
+
+
+
+    // Pievieno plus zīmi, ja skaitlis ir pozitīvs
+
+    if (formatted > 0) {
+
+        return '+' + str;
+
+    }
+
+    return str;
+
+}
+
+
+
+// Funkcija, kas formatē skaitli bez plus zīmes
+
+function formatRaw(num) {
+
+    if (isNaN(num)) return 'NaN';
+
+    let formatted = Math.round(num * 100) / 100;
+
+    return formatted.toString().replace('.', ',');
+
+}
+
+
+
+// Funkcija, kas veido galīgo vienādojumu
+
+function formatEquation(k, b) {
+
+    let kStr = formatRaw(k);
+
+    let bStr = formatNumber(b);
+
+
+
+    // Virziena koeficienta (k) apstrāde
+
+    if (k === 0) {
+
+        return `y = ${formatRaw(b)}`;
+
+    }
+
+    if (k === 1) {
+
+        kStr = ''; // y = x
+
+    } else if (k === -1) {
+
+        kStr = '-'; // y = -x
+
+    } else {
+
+        kStr = `${kStr}`;
+
+    }
+
+
+
+    // Brīvā locekļa (b) apstrāde (tagad nodrošina simetrisku atstarpi)
+
+    if (b === 0) {
+
+        bStr = '';
+
+    } else if (b > 0) {
+
+        // Pārvērš "+[vērtība]" par " + [vērtība]"
+
+        bStr = bStr.replace('+', ' + '); // <--- ИСПРАВЛЕНИЕ ДЛЯ ПОЛОЖИТЕЛЬНЫХ ЗНАЧЕНИЙ
+
+    } else {
+
+        // Pārvērš "-[vērtība]" par " - [vērtība]"
+
+        bStr = bStr.replace('-', ' - '); // <--- ИСПРАВЛЕНИЕ ДЛЯ ОТРИЦАТЕЛЬНЫХ ЗНАЧЕНИЙ
+
+    }
+
+    
+
+    return `y = ${kStr}x${bStr}`;
+
+}
+
+
+
+/* ---------- GALVENĀ APRĒĶINA FUNKCIJA ---------- */
+
+function calculateFunction() {
+
+    // 1. Datu ievade
+
+    const x1 = parseFloat(document.getElementById('x1Input').value);
+
+    const y1 = parseFloat(document.getElementById('y1Input').value);
+
+    const x2 = parseFloat(document.getElementById('x2Input').value);
+
+    const y2 = parseFloat(document.getElementById('y2Input').value);
+
+
+
+    const resultsDiv = document.getElementById('results');
+
+    const stepsDiv = document.getElementById('steps');
+
+    
+
+    resultsDiv.innerHTML = '';
+
+    stepsDiv.innerHTML = '';
+
+
+
+    // Pārbaude, vai dati ir derīgi
+
+    if (isNaN(x1) || isNaN(y1) || isNaN(x2) || isNaN(y2)) {
+
+        resultsDiv.innerHTML = `<p class="text-red-500 font-bold">Lūdzu, ievadiet derīgas skaitliskas koordinātas visiem punktiem.</p>`;
+
+        stepsDiv.innerHTML = `<li>Lūdzu, ievadiet derīgas skaitliskas koordinātas.</li>`;
+
+        return;
+
+    }
+
+
+
+    // 2. Aprēķini
+
+
+
+    // 2.1. Argumenta un funkcijas pieaugums
+
+    const deltaX = x2 - x1;
+
+    const deltaY = y2 - y1;
+
+    
+
+    // Pārbaude, vai nav vertikāla līnija (dalīšana ar nulli)
+
+    if (deltaX === 0) {
+
+        resultsDiv.innerHTML = `<p class="text-red-500 font-bold">Kļūda: Delta x ir nulle! Šī ir vertikāla līnija ($\mathbf{x = ${formatRaw(x1)}}$), kuru nevar aprakstīt ar funkciju $\mathbf{y = kx + b}$.</p>`;
+
+        stepsDiv.innerHTML = `<li>1. Aprēķinām Δx: Δx = x₂ - x₁ = ${formatRaw(x2)} - ${formatRaw(x1)} = 0.</li><li>**Secinājums:** Tā kā Δx = 0, funkcija ir vertikāla līnija x = ${formatRaw(x1)}, un tai nav formas y = kx + b.</li>`;
+
+        return;
+
+    }
+
+
+
+    // 2.2. Virziena koeficients k
+
+    const k = deltaY / deltaX;
+
+
+
+    // 2.3. Brīvā locekļa b aprēķins (izmantojot 1. punktu)
+
+    // Formula: y = kx + b  =>  b = y - kx
+
+    const b = y1 - k * x1;
+
+    
+
+    // 3. Rezultātu izvadīšana soļos
+
+    
+
+    // 3.1. Datu ievade un sākuma formula
+
+    stepsDiv.innerHTML += `<li>1. Dotie punkti: A(${formatRaw(x1)}; ${formatRaw(y1)}) un B(${formatRaw(x2)}; ${formatRaw(y2)}). Mērķis: noteikt y = kx + b.</li>`;
+
+
+
+    // 3.2. Virziena koeficienta k aprēķins
+
+    stepsDiv.innerHTML += `<li>2. Aprēķinām argumenta (Δx) un funkcijas (Δy) pieaugumu: </li>`;
+
+    stepsDiv.innerHTML += `<div class="math-formula">Δx = x₂ - x₁ = ${formatSubtraction(x2, x1)} = ${formatRaw(deltaX)}</div>`;
+
+    stepsDiv.innerHTML += `<div class="math-formula">Δy = y₂ - y₁ = ${formatSubtraction(y2, y1)} = ${formatRaw(deltaY)}</div>`;
+
+    stepsDiv.innerHTML += `<li>3. Aprēķinām virziena koeficientu k (funkcijas pieauguma attiecību pret argumenta pieaugumu):</li>`;
+
+    stepsDiv.innerHTML += `<div class="math-formula">k = Δy / Δx = ${formatRaw(deltaY)} / ${formatRaw(deltaX)} = ${formatRaw(k)}</div>`;
+
+
+
+    // 3.3. Brīvā locekļa b aprēķins
+
+    stepsDiv.innerHTML += `<li>4. Sastādām pagaidu formulu, ievietojot k: y = ${formatRaw(k)}x + b.</li>`;
+
+    stepsDiv.innerHTML += `<li>5. Atrodam brīvo locekli b, ievietojot formulā punkta A(${formatRaw(x1)}; ${formatRaw(y1)}) koordinātas:</li>`;
+
+    stepsDiv.innerHTML += `<div class="math-formula">${formatRaw(y1)} = ${formatRaw(k)} ⋅ ${encloseNegative(x1)} + b</div>`;
+
+    stepsDiv.innerHTML += `<div class="math-formula">b = ${formatRaw(y1)} - ${formatRaw(k)} ⋅ ${encloseNegative(x1)} = ${formatRaw(b)}</div>`;
+
+    
+
+    // 3.4. Gala rezultāts
+
+    const finalEquation = formatEquation(k,b);
+
+    stepsDiv.innerHTML += `<li>6. Gala formula: Ievietojam k un b vērtības:</li>`;
+
+stepsDiv.innerHTML += `<div class="math-formula"> ${finalEquation}</div>`;
+
+
+
+    /* ----- Gala rezultātu bloks ----- */
+
+    resultsDiv.innerHTML = `
+
+        <h3 class="text-xl font-bold mb-3">Galīgais lineārās funkcijas vienādojums:</h3>
+
+        <div class="p-4 bg-red-100 border-l-4 border-red-600 rounded-lg">
+
+            <p class="text-2xl font-bold text-red-700 text-center">
+
+                <span class="font-bold">${finalEquation}</span>
+
+            </p>
+
+        </div>
+
+        <div class="mt-4 space-y-2 text-sm text-secondary-color">
+
+            <p>Virziena koeficients k = <span class="font-semibold text-primary-color">${formatRaw(k)}</span></p>
+
+            <p>Brīvais loceklis b = <span class="font-semibold text-primary-color">${formatRaw(b)}</span></p>
+
+        </div>
+
+    `;
+
+
+
+    // 4. Animācija
+
+    anime({
+
+        targets: '#steps li',
+
+        translateX: [-20, 0],
+
+        opacity: [0, 1],
+
+        duration: 800,
+
+        delay: anime.stagger(150),
+
+        easing: 'easeOutQuart'
+
+    });
+
+    anime({
+
+        targets: '#results',
+
+        translateY: [-20, 0],
+
+        opacity: [0, 1],
+
+        duration: 800,
+
+        delay: 1000,
+
+        easing: 'easeOutQuart'
+
+    });
+
+}
+
+
+
+/* ---------- inicializācija (ФИКСИРОВАНО) ---------- */
+
+document.addEventListener('DOMContentLoaded', () => {
+
+    // Вызываем расчет сразу при загрузке страницы, используя данные по умолчанию
+
+    calculateFunction(); 
+
+
+
+    // Добавляем обработчик нажатия ENTER в текстовом поле
+
+    const inputs = ['x1Input', 'y1Input', 'x2Input', 'y2Input'];
+
+    inputs.forEach(id => {
+
+        document.getElementById(id).addEventListener('keydown', function(event) {
+
+            if (event.key === 'Enter') {
+
+                event.preventDefault(); 
+
+                calculateFunction();
+
+            }
+
+        });
+
+    });
+
+
+
+    // Анимация остальных элементов
+
+    anime({
+
+        targets: '.hero-title, .hero-bg p',
+
+        translateY: [50, 0],
+
+        opacity: [0, 1],
+
+        duration: 1000,
+
+        delay: anime.stagger(100),
+
+        easing: 'easeOutQuart'
+
+    });
+
+    
+
+    const observer = new IntersectionObserver((entries) => {
+
+        entries.forEach(entry => {
+
+            if (entry.isIntersecting) {
+
+                anime({
+
+                    targets: entry.target,
+
+                    translateY: [50, 0],
+
+                    opacity: [0, 1],
+
+                    duration: 800,
+
+                    easing: 'easeOutQuart'
+
+                });
+
+                observer.unobserve(entry.target);
+
+            }
+
+        });
+
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.content-card').forEach(card => observer.observe(card));
+
+});
+
+</script>
+
+</body>
+
+
+
+</html>
